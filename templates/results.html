@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+<ul class=results>
+  {% for link in results %}
+    <li><a href="{{ link|safe}}">{{ link|safe}}</a>
+  {% else %}
+    <li><em>No recipes found with all requested ingredients</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
