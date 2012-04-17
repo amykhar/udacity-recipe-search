@@ -19,7 +19,7 @@ import re
 DATABASE = 'recipe_search'
 HOSTNAME = 'localhost'
 USER = 'root'
-PASSWORD = ''
+PASSWORD = 'dzDUmo2Y'
 MAX_PAGES_TO_CRAWL = 10000
 START_TERM = 'kv-ingred'
 END_TERM = 'instructions'
@@ -73,7 +73,6 @@ def get_next_target(page):
 def get_all_links(page):
     links = []
     soup = bs(page)
-    title = soup.html.head.title
     for link in soup.findAll('a'):
         url = link.get('href')
         if url is None:
