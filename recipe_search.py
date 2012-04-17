@@ -1,3 +1,12 @@
+#Created by Amy Anuszewski as part of the Udacity CS101 course 2012
+
+#This script provides the web interface for the recipe search engine.  It uses Flask and Sqlite as a front end.
+
+#This work is licensed under the
+#Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+#To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/
+#or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
 from sqlite3 import dbapi2 as sqlite3
 from contextlib import closing
 import db_lib
@@ -21,13 +30,6 @@ app.config.from_object(__name__)
 def search():
     return render_template('search.html')
 
-
-def goodbye():
-    return "Bye Now!"
-
-
-def function_after():
-    return "After"
 
 
 def connect_db():
