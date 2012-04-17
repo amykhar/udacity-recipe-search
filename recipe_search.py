@@ -7,18 +7,16 @@
 #To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/
 #or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
-from sqlite3 import dbapi2 as sqlite3
-from contextlib import closing
-import db_lib
+from tornado.database import Connection
 from flask import Flask, request, g, redirect, \
      render_template, flash
 
 
 # configuration
-DATABASE = 'recipe_search.db'
-DEBUG = True
-USERNAME = 'admin'
-PASSWORD = 'default'
+DATABASE = 'recipe_search'
+HOSTNAME = 'localhost'
+USER = 'root'
+PASSWORD = 'dzDUmo2Y'
 SECRET_KEY = 'udacious'
 
 
@@ -31,25 +29,21 @@ def search():
     return render_template('search.html')
 
 
-
 def connect_db():
-    return sqlite3.connect(DATABASE)
-
-
-def init_db():
-    with closing(connect_db()) as db:
-        with app.open_resource('schema.sql') as f:
-            db.cursor().executescript(f.read())
-        db.commit()
+    db = Connection(HOSTNAME,
+                      DATABASE,
+                      USER,
+                      PASSWORD)
+    return db
 
 
 def search_database(query_terms):
     word_list = ",".join(query_terms)
-    word_id_list = db_lib.query_db("select id from words where word in(" + word_list + ")", g.db, [])
+    word_id_list = g.db.query("select id from words where word in(" + word_list + ")")
     list_of_url_lists = []
     for word_id in word_id_list:
         url_query = "SELECT url from urls left join word_index on word_index.url_id = urls.id where word_index.word_id = " + str(word_id['id'])
-        url_list = db_lib.query_db(url_query, g.db, [])
+        url_list = g.db.query(url_query)
         list_of_url_lists.append(url_list)
     results = find_conjunction(list_of_url_lists)
     return results
@@ -71,7 +65,6 @@ def find_conjunction(list_of_url_lists):
                 results_list.append(url)
         found = True
     return results_list
-
 
 
 @app.before_request

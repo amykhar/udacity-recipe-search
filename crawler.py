@@ -1,11 +1,25 @@
+#Created by Amy Anuszewski as part of the Udacity CS101 course 2012
+
+#This script provides the crawer functionality.  It scans up to 10000 pages on foodnetwork.com and indexes items
+#found in the ingredients section of recipe pages.  The index is stored in an sqlite database.  To make it easier
+#to configure, the max number of pages to scan, the html tags that signify the start end end of the ingredients section
+#and the name of the database are set in configuration variables at the top of the script.
+
+#This work is licensed under the
+#Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+#To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/
+#or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
 import urllib
-from sqlite3 import dbapi2 as sqlite3
+from tornado.database import Connection
 from BeautifulSoup import BeautifulSoup as bs
 import urlparse
 import re
-import db_lib
 
-DATABASE = 'recipe_search.db'
+DATABASE = 'recipe_search'
+HOSTNAME = 'localhost'
+USER = 'root'
+PASSWORD = 'dzDUmo2Y'
 MAX_PAGES_TO_CRAWL = 10000
 START_TERM = 'kv-ingred'
 END_TERM = 'instructions'
@@ -59,6 +73,7 @@ def get_next_target(page):
 def get_all_links(page):
     links = []
     soup = bs(page)
+    title = soup.html.head.title
     for link in soup.findAll('a'):
         url = link.get('href')
         if url is None:
@@ -105,43 +120,43 @@ def add_to_index(db, keyword, url):
         insert_word(keyword, db)
         word_id = get_word_id(keyword, db)
         url_id = get_url_id(url, db)
-        db.execute('insert into word_index(word_id,url_id) values(?,?)',
-                   [word_id, url_id])
     else:
         url_id = get_url_id(url, db)
-        db.execute('insert into word_index(word_id,url_id) values(?,?)',
-            [word_id, url_id])
-
-    db.commit()
+    db.execute('insert into word_index(word_id,url_id) values(' + word_id + ',' + url_id + ')')
 
 
 def connect_db():
-    return sqlite3.connect(DATABASE)
+    db = Connection('localhost',
+                      'recipe_search',
+                      'root',
+                      'dzDUmo2Y')
+    return db
 
 
 def get_word_id(word, db):
-    word_id = db_lib.query_db('select id from words where word = ?', db, [word], one=True)
-    if word_id is not None:
-        word_id = word_id['id']
+    word_id = db.query('select id from words where word = "' + word + '"')
+    if len(word_id) > 0:
+        word_id = str(word_id[0]['id'])
+    else:
+        word_id = None
     return word_id
 
 
 def get_url_id(url, db):
-    url_id = db_lib.query_db('select id from urls where url = ?', db,
-                [url], one=True)
-    if url_id is not None:
-        url_id = url_id['id']
+    url_id = db.query('select id from urls where url = "' + url + '"')
+    if len(url_id) > 0:
+        url_id = str(url_id[0]['id'])
+    else:
+        url_id = None
     return url_id
 
 
 def insert_url(url, db):
-    db.execute('insert into urls (url) values (?)',
-                 [url])
+    db.execute('insert into urls (url) values ("' + url + '")')
 
 
 def insert_word(word, db):
-    db.execute('insert into words (word) values (?)',
-                 [word])
+    db.execute('insert into words (word) values ("' + word + '")')
 
 
 def main():
