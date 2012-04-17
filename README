@@ -1,6 +1,6 @@
 My entry is two parts.  The first is primarily the web crawler that we built for the class, with a few modifications.
 1.  I use BeautifulSoup to help me parse the html for my search engine.
-2.  I use Sqlite to store the search index.  If I were doing this for production, I would probably use MySql or Postresql.
+2.  Initially I used sqlite to rough out the app.  But, I modified it to use MySQL via the tornado.database library
 3.  Because this search engine is intended to crawl a single site, I am interested primarily in the relative links.  To prevent the crawler from heading off to follow FoodNetwork.com's affiliate and twitter links, I have excluded external links from the crawler.
 4.  My search engine is interested in the ingredients of the recipes.  Therefore, I found the html tags used to delineate the ingredients on the page, and I index only those words.  However, the crawler does look at the entire page to get links.  Because web sites notoriously change these markers, I put them in config variables at the top of the script for easy modification.
 
@@ -10,8 +10,7 @@ While I have many years of experience with PHP, MySQL and Apache, I knew nothing
 
 Todo:
 1.  Handle boolean operators for the search.  Chicken AND Rice NOT  Peas, etc.
-2.   Move from Sqlite to MySql
-3.    Better display of the links.  Have the crawler get the page title and store it in the database, and then render the links using the page title rather than the raw URL.
+2.    Better display of the links.  Have the crawler get the page title and store it in the database, and then render the links using the page title rather than the raw URL.
 
 The deployed app:  http://amyanuszewski.com
 
