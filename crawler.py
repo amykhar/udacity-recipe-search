@@ -19,7 +19,7 @@ import re
 DATABASE = 'recipe_search'
 HOSTNAME = 'localhost'
 USER = 'root'
-PASSWORD = 'dzDUmo2Y'
+PASSWORD = ''
 MAX_PAGES_TO_CRAWL = 10000
 START_TERM = 'kv-ingred'
 END_TERM = 'instructions'
@@ -126,10 +126,10 @@ def add_to_index(db, keyword, url):
 
 
 def connect_db():
-    db = Connection('localhost',
-                      'recipe_search',
-                      'root',
-                      'dzDUmo2Y')
+    db = Connection(HOSTNAME,
+                      DATABASE,
+                      USER,
+                      PASSWORD)
     return db
 
 

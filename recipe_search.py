@@ -16,7 +16,7 @@ from flask import Flask, request, g, redirect, \
 DATABASE = 'recipe_search'
 HOSTNAME = 'localhost'
 USER = 'root'
-PASSWORD = 'dzDUmo2Y'
+PASSWORD = ''
 SECRET_KEY = 'udacious'
 
 
