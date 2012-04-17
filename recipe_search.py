@@ -88,6 +88,9 @@ def teardown_request(exception):
 @app.route('/search', methods=['POST'])
 def lookup():
     query = request.form["query"]
+    if query == '':
+        flash('Please enter a search term')
+        return redirect('/')
     query_terms = query.split()
     word_list = []
     for word in query_terms:
