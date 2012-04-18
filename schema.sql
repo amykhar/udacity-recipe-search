@@ -1,20 +1,22 @@
-drop table if exists words;
-create table words (
-  id integer primary key autoincrement,
-  word string not null
-);
+CREATE TABLE IF NOT EXISTS `urls` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `url` varchar(300) NOT NULL,
+  `title` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
-drop table if exists urls;
-create table urls (
-  id integer primary key autoincrement,
-  url string not null
-);
+
+CREATE TABLE IF NOT EXISTS `words` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `word` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
-drop table if exists word_index;
-create table word_index (
-  id integer primary key autoincrement,
-  word_id integer,
-  url_id integer
-);
+CREATE TABLE IF NOT EXISTS `word_index` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `word_id` int(11) NOT NULL,
+  `url_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
