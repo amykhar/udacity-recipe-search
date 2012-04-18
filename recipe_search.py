@@ -15,8 +15,8 @@ from flask import Flask, request, g, redirect, \
 # configuration
 DATABASE = 'recipe_search'
 HOSTNAME = 'localhost'
-USER = 'root'
-PASSWORD = ''
+USER = '' #put your mysql user name here
+PASSWORD = '' #put your mysql password here
 SECRET_KEY = 'udacious'
 
 
@@ -42,7 +42,7 @@ def search_database(query_terms):
     word_id_list = g.db.query("select id from words where word in(" + word_list + ")")
     list_of_url_lists = []
     for word_id in word_id_list:
-        url_query = "SELECT url from urls left join word_index on word_index.url_id = urls.id where word_index.word_id = " + str(word_id['id'])
+        url_query = "SELECT DISTINCT url from urls left join word_index on word_index.url_id = urls.id where word_index.word_id = " + str(word_id['id'])
         url_list = g.db.query(url_query)
         list_of_url_lists.append(url_list)
     results = find_conjunction(list_of_url_lists)

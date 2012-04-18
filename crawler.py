@@ -18,8 +18,8 @@ import re
 
 DATABASE = 'recipe_search'
 HOSTNAME = 'localhost'
-USER = 'root'
-PASSWORD = 'dzDUmo2Y'
+USER = '' #put your mysql user name here
+PASSWORD = '' #put your mysql password here
 MAX_PAGES_TO_CRAWL = 10000
 START_TERM = 'kv-ingred'
 END_TERM = 'instructions'
@@ -72,12 +72,15 @@ def get_next_target(page):
 
 def get_all_links(page):
     links = []
-    soup = bs(page)
+    try:
+        soup = bs(page)
+    except ValueError:
+        return []
     for link in soup.findAll('a'):
         url = link.get('href')
         if url is None:
             continue
-        if url.find('.com') != -1 or url.find('.net') != -1:
+        if url.find('.com') != -1 or url.find('.net') != -1 or url.find('products.aspx?') != -1 or url.find('productinfo.aspx?') != -1:
             continue  # only looking for relative links to stay onsite
         links.append(url)
     return links
