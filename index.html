@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Udacity-recipe-search by amykhar</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Udacity-recipe-search</h1>
+        <p>A project for the Udacity CS101 Class</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/amykhar/udacity-recipe-search" class="button fork"><strong>Fork On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/amykhar/udacity-recipe-search/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/amykhar/udacity-recipe-search/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <p>My entry is two parts.  The first is primarily the web crawler that we built for the class, with a few modifications.
+1.  I use BeautifulSoup to help me parse the html for my search engine.
+2.  Initially I used sqlite to rough out the app.  But, I modified it to use MySQL via the tornado.database library
+3.  Because this search engine is intended to crawl a single site, I am interested primarily in the relative links.  To prevent the crawler from heading off to follow FoodNetwork.com's affiliate and twitter links, I have excluded external links from the crawler.
+4.  My search engine is interested in the ingredients of the recipes.  Therefore, I found the html tags used to delineate the ingredients on the page, and I index only those words.  However, the crawler does look at the entire page to get links.  Because web sites notoriously change these markers, I put them in config variables at the top of the script for easy modification.</p>
+
+<p>The second part is the search engine.  I had no experience using Python to show web pages; so there was a bit of a learning curve on this side.  In order to keep things simple, I used Flask (<a href="http://flask.pocoo.org/">http://flask.pocoo.org/</a>)  Flask allowed me to quickly get some pages connected to my lookup function.  As with the crawler, the lookup function uses Mysql to access the index.  The lookup function handles multiple terms, but unlike the homework assignment, order does not matter and the terms do not have to be adjacent.</p>
+
+<p>While I have many years of experience with PHP, MySQL and Apache, I knew nothing about Python before this class.  So, deploying the app ended up being the most challenging aspect.  I finally ended up putting it on Amazon EC2 using Nginx and wsgi.   These directions were the most helpful:  <a href="https://github.com/d5/docs/wiki/Installing-Flask-on-Amazon-EC2">https://github.com/d5/docs/wiki/Installing-Flask-on-Amazon-EC2</a></p>
+
+<p>Todo:
+1.  Handle boolean operators for the search.  Chicken AND Rice NOT  Peas, etc.
+2.    Better display of the links.  Have the crawler get the page title and store it in the database, and then render the links using the page title rather than the raw URL.</p>
+
+<p>The deployed app:  <a href="http://amyanuszewski.com">http://amyanuszewski.com</a></p>
+
+<p>The code: <a href="https://github.com/amykhar/udacity-recipe-search">https://github.com/amykhar/udacity-recipe-search</a></p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/amykhar">amykhar</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+    
+  </body>
+</html>
