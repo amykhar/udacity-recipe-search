@@ -18,6 +18,7 @@ HOSTNAME = 'localhost'
 USER = '' #put your mysql user name here
 PASSWORD = '' #put your mysql password here
 SECRET_KEY = 'udacious'
+DEBUG = True
 
 
 app = Flask("__main__")
@@ -45,6 +46,8 @@ def search_database(query_terms):
         url_query = "SELECT DISTINCT url from urls left join word_index on word_index.url_id = urls.id where word_index.word_id = " + str(word_id['id'])
         url_list = g.db.query(url_query)
         list_of_url_lists.append(url_list)
+    if list_of_url_lists == []:
+        return []
     results = find_conjunction(list_of_url_lists)
     return results
 
