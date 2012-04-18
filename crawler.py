@@ -80,7 +80,7 @@ def get_all_links(page):
         url = link.get('href')
         if url is None:
             continue
-        if url.find('.co.uk') != -1 or url.find('cgi-bin') != -1 or url.find('.com') != -1 or url.find('.net') != -1 or url.find('products.aspx?') != -1 or url.find('productinfo.aspx?') != -1:
+        if url.find('pictures') != -1 or url.find('.co.uk') != -1 or url.find('cgi-bin') != -1 or url.find('.com') != -1 or url.find('.net') != -1 or url.find('products.aspx?') != -1 or url.find('productinfo.aspx?') != -1:
             continue  # only looking for relative links to stay onsite
         links.append(url)
     return links
@@ -124,7 +124,7 @@ def add_to_index(db, keyword, url):
         url_id = get_url_id(url, db)
     else:
         url_id = get_url_id(url, db)
-    db.execute('insert into word_index(word_id,url_id) values(' + word_id + ',' + url_id + ')')
+    db.execute('insert ignore into word_index(word_id,url_id) values(' + word_id + ',' + url_id + ')')
 
 
 def connect_db():
