@@ -12,7 +12,7 @@ Todo:
 1.  Handle boolean operators for the search.  Chicken AND Rice NOT  Peas, etc.
 2.    Better display of the links.  Have the crawler get the page title and store it in the database, and then render the links using the page title rather than the raw URL.
 
-The deployed app:  http://amyanuszewski.com
+
 
 The code: https://github.com/amykhar/udacity-recipe-search
 
